@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:email_validator/email_validator.dart';
 
 void main() {
   runApp(MyApp());
@@ -242,7 +243,7 @@ class _MyRegistrationScreenState extends State<MyRegistrationScreen> {
     if (email.isNotEmpty) {
       // Add your custom email validation logic here
       // For example, check if the email contains '@' and '.com'
-      if (email.contains('@') && email.contains('.com')) {
+      if (EmailValidator.validate(email)) {
         setState(() {
           _emailValid = true;
           _emailError = false;
