@@ -14,6 +14,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: Scaffold(
+        backgroundColor: Color(0xffFAF9F7),
         body: MyRegistrationScreen(),
       ),
     );
@@ -27,12 +28,13 @@ class MyRegistrationScreen extends StatefulWidget {
 
 class _MyRegistrationScreenState extends State<MyRegistrationScreen> {
   bool _emailError = false;
-  String _emailErrorText = '';
   String _email = '';
+  String _password = '';
   bool _passwordVisible = false;
   bool _emailValid = false;
 
   final emailController = TextEditingController();
+  final passwordController = TextEditingController();
   final focusNode = FocusNode();
 
   @override
@@ -47,43 +49,60 @@ class _MyRegistrationScreenState extends State<MyRegistrationScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(height: 40),
+          Row(
+            children: [
+              Expanded(
+                child: Container(
+                  child: Text(
+                    'Регистрация',
+                    style: TextStyle(fontSize: 32, fontWeight: FontWeight.w600, color:Color(0xff1C1B19), fontFamily: 'Inter'),
+                  ),
+                ),
+              ),
+              GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      //smth
+                    });
+                  },
+                  child: Image.asset('assets/support.png'),
+                ),
+            ],
+          ),
+          SizedBox(height: 16),
           Container(
-            padding: EdgeInsets.all(8),
+            width: 217,
             child: Text(
-              'Регистрация',
-              style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color:Color(0xff1C1B19), fontFamily: 'Inter'),
+              'Зарегистрируйтесь, чтобы записываться на приём, просматривать медкарту и вести семейный профиль.',
+              style: TextStyle(fontSize: 16, color: Color(0xff90908E), fontFamily: 'Inter'),
+              textAlign: TextAlign.left,
             ),
           ),
-          SizedBox(height: 12),
+          SizedBox(height: 39),
           Container(
-            padding: EdgeInsets.all(8),
+            padding: EdgeInsets.only(bottom: 6),
             child: Text(
-              'Register to book an appointment, view medical card, and manage family profile',
-              style: TextStyle(fontSize: 14),
-            ),
-          ),
-          SizedBox(height: 24),
-          Container(
-            padding: EdgeInsets.only(bottom: 8),
-            child: Text(
-              'Email',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              _emailError ? 'Такой почты не существует' : '',
+              style: TextStyle(color: Color(0xffDD2006), fontSize: 12, fontWeight: FontWeight.w400, fontFamily: 'Inter'),
             ),
           ),
           Container(
             decoration: BoxDecoration(
               border: Border.all(color: Colors.grey),
               borderRadius: BorderRadius.circular(4),
-            ),
+            ), 
             child: Stack(
               children: [
                 TextField(
+                  cursorColor: Color(0xffDD2006),
                   controller: emailController,
                   focusNode: focusNode,
                   onChanged: (value) {
@@ -92,69 +111,73 @@ class _MyRegistrationScreenState extends State<MyRegistrationScreen> {
                       _emailError = false;
                     });
                   },
+                  textAlign: TextAlign.left,
                   decoration: InputDecoration(
-                    contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                    labelText: 'Enter your email',
-                    errorText: _emailError ? _emailErrorText : null,
-                    suffixIcon: GestureDetector(
-                      onTap: () {
-                        emailController.clear();
-                        setState(() {
-                          _email = '';
-                          _emailValid = false;
-                        });
-                      },
-                      child: Icon(
-                        Icons.clear,
-                        color: _email.isNotEmpty ? Colors.black : Colors.grey,
+                    contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                    hintText: 'Электронная почта',
+                    hintStyle: TextStyle(
+                      color: Color(0xff90908E),
+                      fontSize: 16,
+                    ),
+                    suffixIcon: Container(
+                      padding: EdgeInsets.only(right: 12),
+                      width: 60,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Visibility(
+                            visible: _emailValid,
+                            child: Image.asset(
+                              'assets/ratio_btn.png',
+                              width: 20,
+                              height: 20,
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              emailController.clear();
+                              setState(() {
+                                _email = '';
+                                _emailValid = false;
+                              });
+                            },
+                            child: Image.asset(
+                              'assets/clear_btn.png',
+                              width: 20,
+                              height: 20,
+                              color: _email.isNotEmpty ? Color(0xff90908E) : Color(0xffFAF9F7),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
-                ),
-                Positioned(
-                  right: 40,
-                  top: 10,
-                  child: GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        _checkEmail(_email);
-                      });
-                    },
-                    child: Icon(
-                      _emailValid ? Icons.check_circle : Icons.circle_outlined,
-                      color: _emailValid ? Colors.green : Colors.grey,
-                      size: 24,
-                    ),
-                  ),
-                ),
+                )
               ],
             ),
           ),
-          SizedBox(height: 24),
-          Container(
-            padding: EdgeInsets.only(bottom: 8),
-            child: Text(
-              _emailError ? 'Invalid email address' : '',
-              style: TextStyle(color: Colors.red, fontSize: 12),
-            ),
-          ),
-          Container(
-            padding: EdgeInsets.only(bottom: 8),
-            child: Text(
-              'Password',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-            ),
-          ),
+          SizedBox(height: 6),
           Container(
             decoration: BoxDecoration(
               border: Border.all(color: Colors.grey),
               borderRadius: BorderRadius.circular(4),
             ),
             child: TextField(
+              controller: passwordController,
+              onChanged: (value) {
+                setState(() {
+                  _password = value;
+                });
+              },
+              cursorColor: Color(0xffDD2006),
               obscureText: !_passwordVisible,
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                labelText: 'Enter your password',
+                hintText: 'Пароль',
+                hintStyle: TextStyle(
+                    color: Color(0xff90908E),
+                    fontSize: 16
+                ),
                 suffixIcon: GestureDetector(
                   onTap: () {
                     setState(() {
@@ -169,15 +192,31 @@ class _MyRegistrationScreenState extends State<MyRegistrationScreen> {
               ),
             ),
           ),
-          SizedBox(height: 24),
+          SizedBox(height: 16),
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8),
-            child: ElevatedButton(
-              onPressed: () {
-                // Handle registration button press
-              },
-              child: Text('Next'),
-            ),
+            padding: const EdgeInsets.symmetric(vertical: 0),
+            child: Opacity(
+              opacity: (_emailValid && _emailValid) ? 1.0 : 0.5,
+              child: ElevatedButton(
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(Color(0xffDD2006)),
+                  shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(6))),
+                  fixedSize: MaterialStateProperty.all(Size(screenWidth, 48))
+                ),
+                onPressed: () {
+                  // Handle registration button press
+                },
+                child: Text(
+                  'Далее',
+                  style: TextStyle(
+                    fontFamily: 'Inter',
+                    fontSize: 20,
+                    fontWeight: FontWeight.w500,
+                    color: Color(0xffFAF9F7)
+                  ),
+                  ),
+              ),
+            )
           ),
           SizedBox(height: 24),
           Center(
@@ -252,7 +291,6 @@ class _MyRegistrationScreenState extends State<MyRegistrationScreen> {
         setState(() {
           _emailValid = false;
           _emailError = true;
-          _emailErrorText = 'Please enter a valid email address';
         });
       }
     } else {
