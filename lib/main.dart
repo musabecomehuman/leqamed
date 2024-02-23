@@ -56,7 +56,7 @@ class _MyRegistrationScreenState extends State<MyRegistrationScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(height: 40),
+          SizedBox(height: 64),
           Row(
             children: [
               Expanded(
@@ -73,7 +73,7 @@ class _MyRegistrationScreenState extends State<MyRegistrationScreen> {
                       //smth
                     });
                   },
-                  child: Image.asset('assets/support.png'),
+                  child: SvgPicture.asset('assets/support.svg'),
                 ),
             ],
           ),
@@ -82,7 +82,11 @@ class _MyRegistrationScreenState extends State<MyRegistrationScreen> {
             width: 217,
             child: Text(
               'Зарегистрируйтесь, чтобы записываться на приём, просматривать медкарту и вести семейный профиль.',
-              style: TextStyle(fontSize: 16, color: Color(0xff90908E), fontFamily: 'Inter'),
+              style: TextStyle(
+                fontSize: 16,
+                color: Color.fromRGBO(144, 144, 142, 0.52),
+                fontFamily: 'Inter',
+              ),
               textAlign: TextAlign.left,
             ),
           ),
@@ -98,7 +102,7 @@ class _MyRegistrationScreenState extends State<MyRegistrationScreen> {
             decoration: BoxDecoration(
               border: Border.all(color: Colors.grey),
               borderRadius: BorderRadius.circular(4),
-            ), 
+            ),
             child: Stack(
               children: [
                 TextField(
@@ -113,10 +117,10 @@ class _MyRegistrationScreenState extends State<MyRegistrationScreen> {
                   },
                   textAlign: TextAlign.left,
                   decoration: InputDecoration(
-                    contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                    contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 10),
                     hintText: 'Электронная почта',
                     hintStyle: TextStyle(
-                      color: Color(0xff90908E),
+                      color: Color.fromRGBO(144, 144, 142, 0.52),
                       fontSize: 16,
                     ),
                     suffixIcon: Container(
@@ -127,8 +131,8 @@ class _MyRegistrationScreenState extends State<MyRegistrationScreen> {
                         children: [
                           Visibility(
                             visible: _emailValid,
-                            child: Image.asset(
-                              'assets/ratio_btn.png',
+                            child: SvgPicture.asset(
+                              'assets/ratio_btn.svg',
                               width: 20,
                               height: 20,
                             ),
@@ -141,8 +145,8 @@ class _MyRegistrationScreenState extends State<MyRegistrationScreen> {
                                 _emailValid = false;
                               });
                             },
-                            child: Image.asset(
-                              'assets/clear_btn.png',
+                            child: SvgPicture.asset(
+                              'assets/clear_btn.svg',
                               width: 20,
                               height: 20,
                               color: _email.isNotEmpty ? Color(0xff90908E) : Color(0xffFAF9F7),
@@ -172,10 +176,10 @@ class _MyRegistrationScreenState extends State<MyRegistrationScreen> {
               cursorColor: Color(0xffDD2006),
               obscureText: !_passwordVisible,
               decoration: InputDecoration(
-                contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 10),
                 hintText: 'Пароль',
                 hintStyle: TextStyle(
-                    color: Color(0xff90908E),
+                    color: Color.fromRGBO(144, 144, 142, 0.52),
                     fontSize: 16
                 ),
                 suffixIcon: GestureDetector(
@@ -218,50 +222,105 @@ class _MyRegistrationScreenState extends State<MyRegistrationScreen> {
               ),
             )
           ),
-          SizedBox(height: 24),
-          Center(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(width: 8),
-                GestureDetector(
-                  onTap: () {
-                    // Handle Google registration
-                  },
-                  child: SvgPicture.asset('assets/google_icon.svg', width: 20),
-                ),
-                Text('  Регистрация с Google'),
-              ],
-            ),
-          ),
-          SizedBox(height: 24),
-          Center(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(width: 8),
-                GestureDetector(
-                  onTap: () {
-                    // Handle Apple registration
-                  },
-                  child: SvgPicture.asset('assets/apple_icon.svg', width: 20),
-                ),
-                Text('  Регистрация с Apple'),
-              ],
-            ),
-          ),
-          SizedBox(height: 16),
-          Center(
-            child: GestureDetector(
-              onTap: () {
-                // Handle 'Already have an account? Login' press
-              },
-              child: Text(
-                'Login',
-                style: TextStyle(
-                    color: Colors.blue,
-                    decoration: TextDecoration.underline,
-                    fontSize: 16),
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.only(bottom: 20),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: 3),
+                    child: OutlinedButton(
+                      onPressed: () {
+                        // Handle Google registration
+                      },
+                      style: ButtonStyle(
+                        shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(6))),
+                        fixedSize: MaterialStateProperty.all(Size(screenWidth, 52)),
+                        side: MaterialStateProperty.all(BorderSide(width: 1.2, color: Color.fromRGBO(28, 27, 25, 0.12)))
+                      ),
+                      child: Center(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(width: 8),
+                            SvgPicture.asset('assets/google_icon.svg', width: 20),
+                            Text(
+                                '  Регистрация с Google',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontFamily: 'Inter',
+                                fontWeight: FontWeight.w400,
+                                color: Color.fromRGBO(28, 27, 25, 1),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: 3),
+                    child: OutlinedButton(
+                      onPressed: () {
+                        // Handle Google registration
+                      },
+                      style: ButtonStyle(
+                          shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(6))),
+                          fixedSize: MaterialStateProperty.all(Size(screenWidth, 52)),
+                          side: MaterialStateProperty.all(BorderSide(width: 1.2, color: Color.fromRGBO(28, 27, 25, 0.12)))
+                      ),
+                      child: Center(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(width: 8),
+                            SvgPicture.asset('assets/apple_icon.svg', width: 20),
+                            Text(
+                              '  Регистрация с Apple',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontFamily: 'Inter',
+                                fontWeight: FontWeight.w400,
+                                color: Color.fromRGBO(28, 27, 25, 1),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: 3),
+                    child: OutlinedButton(
+                      onPressed: () {
+                        // Handle Google registration
+                      },
+                      style: ButtonStyle(
+                          shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(6))),
+                          fixedSize: MaterialStateProperty.all(Size(screenWidth, 52)),
+                          side: MaterialStateProperty.all(BorderSide(width: 1.2, color: Color.fromRGBO(28, 27, 25, 0.12)))
+                      ),
+                      child: Center(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(width: 8),
+                            Text(
+                              'Уже есть аккаунт? Войти',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontFamily: 'Inter',
+                                fontWeight: FontWeight.w400,
+                                color: Color.fromRGBO(28, 27, 25, 1),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
