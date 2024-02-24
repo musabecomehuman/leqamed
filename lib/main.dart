@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:email_validator/email_validator.dart';
+import 'support.dart';
+import 'login.dart';
 
 void main() {
   runApp(MyApp());
@@ -47,6 +49,20 @@ class _MyRegistrationScreenState extends State<MyRegistrationScreen> {
     });
   }
 
+  void _navigateToSupportScreen(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => Support()),
+    );
+  }
+
+  void _navigateToLoginScreen(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => Login()),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
@@ -70,7 +86,7 @@ class _MyRegistrationScreenState extends State<MyRegistrationScreen> {
               GestureDetector(
                   onTap: () {
                     setState(() {
-                      //smth
+                      _navigateToSupportScreen(context);
                     });
                   },
                   child: SvgPicture.asset('assets/support.svg'),
@@ -294,7 +310,7 @@ class _MyRegistrationScreenState extends State<MyRegistrationScreen> {
                     padding: EdgeInsets.symmetric(vertical: 3),
                     child: OutlinedButton(
                       onPressed: () {
-                        // Handle Google registration
+                        _navigateToLoginScreen(context);
                       },
                       style: ButtonStyle(
                           shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(6))),
