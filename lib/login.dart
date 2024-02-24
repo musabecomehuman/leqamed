@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:email_validator/email_validator.dart';
-import 'support.dart';
+import 'recovery.dart';
 import 'main.dart';
 
 class Login extends StatefulWidget {
@@ -30,10 +30,10 @@ class _LoginState extends State<Login> {
     });
   }
 
-  void _navigateToSupportScreen(BuildContext context) {
+  void _navigateToRecoveryScreen(BuildContext context) {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => Support()),
+      MaterialPageRoute(builder: (context) => Recovery()),
     );
   }
 
@@ -72,10 +72,10 @@ class _LoginState extends State<Login> {
                     GestureDetector(
                       onTap: () {
                         setState(() {
-                          _navigateToSupportScreen(context);
+                          _navigateToRecoveryScreen(context);
                         });
                       },
-                      child: SvgPicture.asset('assets/support.svg'),
+                      child: SvgPicture.asset('assets/recover.svg'),
                     ),
                   ],
                 ),
