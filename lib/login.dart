@@ -49,16 +49,17 @@ class _LoginState extends State<Login> {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
+      backgroundColor: Color(0xffFAF9F7),
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
             child: Container(
-              height: screenHeight,
+              height: screenHeight - 40,
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: 64),
+                SizedBox(height: 40),
                 Row(
                   children: [
                     Expanded(
@@ -328,9 +329,9 @@ class _LoginState extends State<Login> {
                 ),
               ],
             ),
-            ),
           ),
         ),
+      ),
       ),
     );
   }
