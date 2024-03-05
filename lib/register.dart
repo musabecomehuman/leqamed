@@ -31,10 +31,12 @@ class MyRegistrationScreen extends StatefulWidget {
 
 class _MyRegistrationScreenState extends State<MyRegistrationScreen> {
   bool _emailError = false;
+  bool _passwordError = false;
   String _email = '';
   String _password = '';
   bool _passwordVisible = false;
   bool _emailValid = false;
+  bool _passwordValid = false;
 
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
@@ -46,6 +48,7 @@ class _MyRegistrationScreenState extends State<MyRegistrationScreen> {
     focusNode.addListener(() {
       if (!focusNode.hasFocus) {
         _checkEmail(_email);
+        _checkPassword(_password);
       }
     });
   }
@@ -64,6 +67,13 @@ class _MyRegistrationScreenState extends State<MyRegistrationScreen> {
     );
   }
 
+  void _navigateToRegCheckScreen(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => RegCheck()),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
@@ -73,10 +83,10 @@ class _MyRegistrationScreenState extends State<MyRegistrationScreen> {
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
-          child: Container(
-            height: screenHeight - 40,
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Column(
+            child: Container(
+              height: screenHeight - 40,
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(height: 40),
@@ -91,13 +101,13 @@ class _MyRegistrationScreenState extends State<MyRegistrationScreen> {
                         ),
                       ),
                       GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              _navigateToSupportScreen(context);
-                            });
-                          },
-                          child: SvgPicture.asset('assets/support.svg'),
-                        ),
+                        onTap: () {
+                          setState(() {
+                            _navigateToSupportScreen(context);
+                          });
+                        },
+                        child: SvgPicture.asset('assets/support.svg'),
+                      ),
                     ],
                   ),
                   SizedBox(height: 16),
@@ -189,61 +199,74 @@ class _MyRegistrationScreenState extends State<MyRegistrationScreen> {
                       border: Border.all(color: Colors.grey),
                       borderRadius: BorderRadius.circular(4),
                     ),
-                    child: TextField(
-                      controller: passwordController,
-                      onChanged: (value) {
-                        setState(() {
-                          _password = value;
-                        });
-                      },
-                      cursorColor: Color(0xffDD2006),
-                      obscureText: !_passwordVisible,
-                      decoration: InputDecoration(
-                        contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-                        hintText: 'Пароль',
-                        hintStyle: TextStyle(
-                            color: Color.fromRGBO(144, 144, 142, 0.52),
-                            fontSize: 16
-                        ),
-                        suffixIcon: GestureDetector(
-                          onTap: () {
+                    child: Stack(
+                      children: [
+                        TextField(
+                          controller: passwordController,
+                          onChanged: (value) {
                             setState(() {
-                              _passwordVisible = !_passwordVisible;
+                              _password = value;
+                              _passwordError = false;
                             });
+                            _checkPassword(_password);
                           },
-                          child: Icon(
-                            _passwordVisible ? Icons.visibility : Icons.visibility_off,
-                            color: Colors.black,
+                          cursorColor: Color(0xffDD2006),
+                          obscureText: !_passwordVisible,
+                          decoration: InputDecoration(
+                            contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                            hintText: 'Пароль',
+                            hintStyle: TextStyle(
+                              color: Color.fromRGBO(144, 144, 142, 0.52),
+                              fontSize: 16,
+                            ),
+                            suffixIcon: GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  _passwordVisible = !_passwordVisible;
+                                });
+                              },
+                              child: Icon(
+                                _passwordVisible ? Icons.visibility : Icons.visibility_off,
+                                color: Colors.black,
+                              ),
+                            ),
+                            suffixText: _passwordError ? '(6+ символов)' : null,
+                            suffixStyle: TextStyle(
+                              fontSize: 12,
+                              color: Color.fromRGBO(221, 32, 6, 1),
+                              fontFamily: 'Inter',
+                              fontWeight: FontWeight.w400,
+                            ),
                           ),
-                        ),
-                      ),
+                        )
+                      ],
                     ),
                   ),
                   SizedBox(height: 16),
                   Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 0),
-                    child: Opacity(
-                      opacity: (_emailValid && _emailValid) ? 1.0 : 0.5,
-                      child: ElevatedButton(
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all(Color(0xffDD2006)),
-                          shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(6))),
-                          fixedSize: MaterialStateProperty.all(Size(screenWidth, 48))
+                      padding: const EdgeInsets.symmetric(vertical: 0),
+                      child: Opacity(
+                        opacity: (_emailValid && _passwordValid) ? 1.0 : 0.5,
+                        child: ElevatedButton(
+                          style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all(Color(0xffDD2006)),
+                              shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(6))),
+                              fixedSize: MaterialStateProperty.all(Size(screenWidth, 48))
+                          ),
+                          onPressed: () {
+                            _navigateToRegCheckScreen(context);
+                          },
+                          child: Text(
+                            'Далее',
+                            style: TextStyle(
+                                fontFamily: 'Inter',
+                                fontSize: 20,
+                                fontWeight: FontWeight.w500,
+                                color: Color(0xffFAF9F7)
+                            ),
+                          ),
                         ),
-                        onPressed: () {
-                          // Handle registration button press
-                        },
-                        child: Text(
-                          'Далее',
-                          style: TextStyle(
-                            fontFamily: 'Inter',
-                            fontSize: 20,
-                            fontWeight: FontWeight.w500,
-                            color: Color(0xffFAF9F7)
-                          ),
-                          ),
-                      ),
-                    )
+                      )
                   ),
                   Expanded(
                     child: Padding(
@@ -258,9 +281,9 @@ class _MyRegistrationScreenState extends State<MyRegistrationScreen> {
                                 // Handle Google registration
                               },
                               style: ButtonStyle(
-                                shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(6))),
-                                fixedSize: MaterialStateProperty.all(Size(screenWidth, 52)),
-                                side: MaterialStateProperty.all(BorderSide(width: 1.2, color: Color.fromRGBO(28, 27, 25, 0.12)))
+                                  shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(6))),
+                                  fixedSize: MaterialStateProperty.all(Size(screenWidth, 52)),
+                                  side: MaterialStateProperty.all(BorderSide(width: 1.2, color: Color.fromRGBO(28, 27, 25, 0.12)))
                               ),
                               child: Center(
                                 child: Row(
@@ -269,7 +292,7 @@ class _MyRegistrationScreenState extends State<MyRegistrationScreen> {
                                     SizedBox(width: 8),
                                     SvgPicture.asset('assets/google_icon.svg', width: 20),
                                     Text(
-                                        '  Регистрация с Google',
+                                      '  Регистрация с Google',
                                       style: TextStyle(
                                         fontSize: 16,
                                         fontFamily: 'Inter',
@@ -286,7 +309,7 @@ class _MyRegistrationScreenState extends State<MyRegistrationScreen> {
                             padding: EdgeInsets.symmetric(vertical: 3),
                             child: OutlinedButton(
                               onPressed: () {
-                                // Handle Google registration
+                                // Handle Apple registration
                               },
                               style: ButtonStyle(
                                   shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(6))),
@@ -382,6 +405,28 @@ class _MyRegistrationScreenState extends State<MyRegistrationScreen> {
     } else {
       setState(() {
         _emailValid = false;
+      });
+    }
+  }
+
+  void _checkPassword(String password) {
+    // Perform password validation
+    if (password.isNotEmpty) {
+      // Check if the password is at least 6 characters long
+      if (password.length >= 6) {
+        setState(() {
+          _passwordValid = true;
+          _passwordError = false;
+        });
+      } else {
+        setState(() {
+          _passwordValid = false;
+          _passwordError = true;
+        });
+      }
+    } else {
+      setState(() {
+        _passwordValid = false;
       });
     }
   }
