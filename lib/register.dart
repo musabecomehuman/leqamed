@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:email_validator/email_validator.dart';
 import 'support.dart';
 import 'login.dart';
+import 'regcheck.dart';
 
 void main() {
   runApp(MyApp());
@@ -68,6 +69,7 @@ class _MyRegistrationScreenState extends State<MyRegistrationScreen> {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
+      backgroundColor: Color(0xffFAF9F7),
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(

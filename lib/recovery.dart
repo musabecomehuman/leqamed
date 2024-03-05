@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:email_validator/email_validator.dart';
-import 'login.dart';
 import 'support.dart';
+import 'regcheck.dart';
 
 class Recovery extends StatefulWidget {
   @override
@@ -26,17 +26,17 @@ class _RecoveryState extends State<Recovery> {
     });
   }
 
-  void _navigateToLoginScreen(BuildContext context) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => Login()),
-    );
-  }
-
   void _navigateToSupportScreen(BuildContext context) {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => Support()),
+    );
+  }
+
+  void _navigateToRegCheckScreen(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => RegCheck()),
     );
   }
 
@@ -61,7 +61,7 @@ class _RecoveryState extends State<Recovery> {
                       GestureDetector(
                         onTap: () {
                           setState(() {
-                            _navigateToLoginScreen(context);
+                            Navigator.pop(context);
                           });
                         },
                         child: SvgPicture.asset('assets/LeftArrowBig.svg'),
@@ -186,7 +186,7 @@ class _RecoveryState extends State<Recovery> {
                               fixedSize: MaterialStateProperty.all(Size(screenWidth, 48))
                           ),
                           onPressed: () {
-                            // Handle registration button press
+                            _navigateToRegCheckScreen(context);
                           },
                           child: Text(
                             'Далее',
