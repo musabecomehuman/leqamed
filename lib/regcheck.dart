@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'support.dart';
+import 'meet.dart';
 
 class RegCheck extends StatefulWidget {
   @override
@@ -10,6 +11,7 @@ class RegCheck extends StatefulWidget {
 class _RegCheckState extends State<RegCheck> {
   List<FocusNode> _focusNodes = List.generate(4, (index) => FocusNode());
   List<TextEditingController> _controllers = List.generate(4, (index) => TextEditingController());
+  String _enteredCode = "";
 
   void _navigateToSupportScreen(BuildContext context) {
     Navigator.push(
@@ -81,6 +83,22 @@ class _RegCheckState extends State<RegCheck> {
                         index: index,
                         focusNode: _focusNodes[index],
                         controller: _controllers[index],
+                        onChanged: (value) {
+                          if (value.isNotEmpty) {
+                            if (index != 3) {
+                              _focusNodes[index + 1].requestFocus();
+                            }
+                            setState(() {
+                              _enteredCode += value.toString();
+                            });
+                            if (_enteredCode == "1234") {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => Meet()),
+                              );
+                            }
+                          }
+                        },
                       );
                     }),
                   ),
@@ -98,8 +116,9 @@ class MyTextField extends StatefulWidget {
   final int index;
   final FocusNode focusNode;
   final TextEditingController controller;
+  final ValueChanged<String> onChanged;
 
-  MyTextField({required this.index, required this.focusNode, required this.controller});
+  MyTextField({required this.index, required this.focusNode, required this.controller, required this.onChanged});
 
   @override
   _MyTextFieldState createState() => _MyTextFieldState();
@@ -128,11 +147,7 @@ class _MyTextFieldState extends State<MyTextField> {
           textAlign: TextAlign.center,
           style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500, fontFamily: 'Inter', color: Color(0xff1C1B19)),
           maxLength: 1,
-          onChanged: (value) {
-            if (value.isNotEmpty) {
-              widget.focusNode.nextFocus();
-            }
-          },
+          onChanged: widget.onChanged,
         ),
       ),
     );
