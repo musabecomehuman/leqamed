@@ -34,6 +34,7 @@ dependencies:
   flutter_svg: ^2.0.4
   google_fonts: ^2.1.0
   email_validator: ^2.1.16
+  carousel_slider: ^4.2.1
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -71,6 +72,17 @@ flutter:
     - assets/close.svg
     - assets/male.svg
     - assets/female.svg
+    - assets/homeElement.png
+    - assets/Video.svg
+    - assets/telemedicine.svg
+    - assets/RightArrowBig.svg
+    - assets/column.svg
+    - assets/home.svg
+    - assets/note.svg
+    - assets/newNote.svg
+    - assets/heart.svg
+    - assets/profile.svg
+    - assets/notifications.svg
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

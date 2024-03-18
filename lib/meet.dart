@@ -1,7 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:email_validator/email_validator.dart';
 import 'support.dart';
+import 'home.dart';
 
 class Meet extends StatefulWidget {
   @override
@@ -14,6 +16,7 @@ class _MeetState extends State<Meet> {
   String _surname = '';
   String _sex = '';
   bool _isGenderSelected = false;
+  DateTime _selectedDate = DateTime.now();
 
   final lastnameController = TextEditingController();
   final nameController = TextEditingController();
@@ -285,7 +288,22 @@ class _MeetState extends State<Meet> {
                                               Padding(padding: EdgeInsets.only(right: 20)),
                                             ],
                                           ),
-
+                                          SizedBox(height: 50),
+                                          Center(
+                                            child: Container(
+                                              height: 100,
+                                              width: screenWidth,
+                                              child: CupertinoDatePicker(
+                                                initialDateTime: _selectedDate,
+                                                onDateTimeChanged: (DateTime newDate) {
+                                                  setState(() {
+                                                    _selectedDate = newDate;
+                                                  });
+                                                },
+                                                mode: CupertinoDatePickerMode.date,
+                                              ),
+                                            ),
+                                          ),
                                           SizedBox(height: 34),
                                           Padding(
                                               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
@@ -415,7 +433,6 @@ class _MeetState extends State<Meet> {
                                                   if (value != null) {
                                                     setState(() {
                                                       _sex = value ? 'Мужчина' : '';
-                                                      _isGenderSelected = true;
                                                     });
                                                   }
                                                 },
@@ -442,7 +459,6 @@ class _MeetState extends State<Meet> {
                                                   if (value != null) {
                                                     setState(() {
                                                       _sex = value ? 'Женщина' : '';
-                                                      _isGenderSelected = true;
                                                     });
                                                   }
                                                 },
@@ -457,7 +473,7 @@ class _MeetState extends State<Meet> {
                                         Padding(
                                             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
                                             child: Opacity(
-                                              opacity: (_isGenderSelected) ? 1.0 : 0.5,
+                                              opacity: (_sex == 'Мужчина' || _sex == 'Женщина') ? 1.0 : 0.5,
                                               child: ElevatedButton(
                                                 style: ButtonStyle(
                                                     backgroundColor: MaterialStateProperty.all(Color(0xffDD2006)),
@@ -465,7 +481,10 @@ class _MeetState extends State<Meet> {
                                                     fixedSize: MaterialStateProperty.all(Size(screenWidth, 48))
                                                 ),
                                                 onPressed: () {
-                                                  Navigator.pop(context);
+                                                  if (_sex == 'Мужчина' || _sex == 'Женщина') {
+                                                    Navigator.pop(context);
+                                                    _isGenderSelected = true;
+                                                  }
                                                 },
                                                 child: Text(
                                                   'Применить',
@@ -537,7 +556,7 @@ class _MeetState extends State<Meet> {
                                   fixedSize: MaterialStateProperty.all(Size(screenWidth, 48))
                               ),
                               onPressed: () {
-                                // Handle registration button press
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
                               },
                               child: Text(
                                 'Далее',
