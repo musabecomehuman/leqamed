@@ -254,7 +254,9 @@ class _MyRegistrationScreenState extends State<MyRegistrationScreen> {
                               fixedSize: MaterialStateProperty.all(Size(screenWidth, 48))
                           ),
                           onPressed: () {
-                            _navigateToRegCheckScreen(context);
+                            if (_emailValid && _passwordValid) {
+                              _navigateToRegCheckScreen(context);
+                            }
                           },
                           child: Text(
                             'Далее',

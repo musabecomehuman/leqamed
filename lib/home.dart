@@ -15,10 +15,8 @@ class _HomeState extends State<Home> {
     return Scaffold(
       backgroundColor: Color(0xffFAF9F7),
       body: SafeArea(
-        child: Center(
           child: SingleChildScrollView(
             child: Container(
-              height: screenHeight - 40,
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -188,36 +186,35 @@ class _HomeState extends State<Home> {
                   ),
                   SizedBox(height: 24),
                   SvgPicture.asset('assets/column.svg', width: screenWidth),
-                  Padding(
-                    padding: EdgeInsets.symmetric(vertical: 12),
-                    child: Row(
-                      children: [
-                        GestureDetector(
-                          child: SvgPicture.asset('assets/home.svg'),
-                        ),
-                        SizedBox(width: (screenWidth - 280) / 4),
-                        GestureDetector(
-                          child: SvgPicture.asset('assets/note.svg'),
-                        ),
-                        SizedBox(width: (screenWidth - 280) / 4),
-                        GestureDetector(
-                          child: SvgPicture.asset('assets/newNote.svg'),
-                        ),
-                        SizedBox(width: (screenWidth - 280) / 4),
-                        GestureDetector(
-                          child: SvgPicture.asset('assets/heart.svg'),
-                        ),
-                        SizedBox(width: (screenWidth - 280) / 4),
-                        GestureDetector(
-                          child: SvgPicture.asset('assets/profile.svg'),
-                        ),
-                      ],
-                    ),
-                  ),
                 ],
               ),
             ),
           ),
+        ),
+      bottomNavigationBar: Padding(
+        padding: EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+        child: Row(
+          children: [
+            GestureDetector(
+              child: SvgPicture.asset('assets/home.svg'),
+            ),
+            SizedBox(width: (screenWidth - 280) / 4),
+            GestureDetector(
+              child: SvgPicture.asset('assets/note.svg'),
+            ),
+            SizedBox(width: (screenWidth - 280) / 4),
+            GestureDetector(
+              child: SvgPicture.asset('assets/newNote.svg'),
+            ),
+            SizedBox(width: (screenWidth - 280) / 4),
+            GestureDetector(
+              child: SvgPicture.asset('assets/heart.svg'),
+            ),
+            SizedBox(width: (screenWidth - 280) / 4),
+            GestureDetector(
+              child: SvgPicture.asset('assets/profile.svg'),
+            ),
+          ],
         ),
       ),
     );

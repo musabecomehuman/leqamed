@@ -16,11 +16,14 @@ class _MeetState extends State<Meet> {
   String _surname = '';
   String _sex = '';
   bool _isGenderSelected = false;
-  DateTime _selectedDate = DateTime.now();
+  bool _isDateSelected = false;
+  DateTime? _selectedDate;
 
   final lastnameController = TextEditingController();
   final nameController = TextEditingController();
   final surnameController = TextEditingController();
+  final dateController = TextEditingController();
+  final sexController = TextEditingController();
 
   void _navigateToSupportScreen(BuildContext context) {
     Navigator.push(
@@ -254,6 +257,8 @@ class _MeetState extends State<Meet> {
                       children: [
                         GestureDetector(
                           onTap: () {
+                            bool isChanged = false;
+                            DateTime? newSelectedDate;
                             showModalBottomSheet(
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
@@ -294,10 +299,15 @@ class _MeetState extends State<Meet> {
                                               height: 100,
                                               width: screenWidth,
                                               child: CupertinoDatePicker(
-                                                initialDateTime: _selectedDate,
+                                                initialDateTime: DateTime.now(),
                                                 onDateTimeChanged: (DateTime newDate) {
                                                   setState(() {
-                                                    _selectedDate = newDate;
+                                                    newSelectedDate = newDate;
+                                                    if (newDate != _selectedDate) {
+                                                      isChanged = true;
+                                                    } else {
+                                                      isChanged = false;
+                                                    }
                                                   });
                                                 },
                                                 mode: CupertinoDatePickerMode.date,
@@ -308,7 +318,7 @@ class _MeetState extends State<Meet> {
                                           Padding(
                                               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
                                               child: Opacity(
-                                                opacity: (1 == 1) ? 1.0 : 0.5,
+                                                opacity: (isChanged) ? 1.0 : 0.5,
                                                 child: ElevatedButton(
                                                   style: ButtonStyle(
                                                       backgroundColor: MaterialStateProperty.all(Color(0xffDD2006)),
@@ -316,6 +326,13 @@ class _MeetState extends State<Meet> {
                                                       fixedSize: MaterialStateProperty.all(Size(screenWidth, 48))
                                                   ),
                                                   onPressed: () {
+                                                    setState(() {
+                                                      _selectedDate = newSelectedDate;
+                                                      if (newSelectedDate != null && isChanged) {
+                                                        _isDateSelected = true;
+                                                        dateController.text = (_selectedDate!.day.toString() + '/' + _selectedDate!.month.toString() + '/' + _selectedDate!.year.toString())!;
+                                                      }
+                                                    });
                                                     Navigator.pop(context);
                                                   },
                                                   child: Text(
@@ -343,7 +360,9 @@ class _MeetState extends State<Meet> {
                             ),
                             child: TextField(
                               enabled: false,
+                              controller: dateController,
                               textAlign: TextAlign.left,
+                              style: TextStyle(color: Color.fromRGBO(28, 27, 25, 1), fontSize: 16),
                               decoration: InputDecoration(
                                 contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 10),
                                 hintText: 'Дата рождения',
@@ -483,7 +502,10 @@ class _MeetState extends State<Meet> {
                                                 onPressed: () {
                                                   if (_sex == 'Мужчина' || _sex == 'Женщина') {
                                                     Navigator.pop(context);
-                                                    _isGenderSelected = true;
+                                                    setState(() {
+                                                      sexController.text = _sex;
+                                                      _isGenderSelected = true;
+                                                    });
                                                   }
                                                 },
                                                 child: Text(
@@ -511,7 +533,9 @@ class _MeetState extends State<Meet> {
                             ),
                             child: TextField(
                               enabled: false,
+                              controller: sexController,
                               textAlign: TextAlign.left,
+                              style: TextStyle(color: Color.fromRGBO(28, 27, 25, 1), fontSize: 16),
                               decoration: InputDecoration(
                                 contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 10),
                                 hintText: 'Пол',
@@ -548,7 +572,7 @@ class _MeetState extends State<Meet> {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           Opacity(
-                            opacity: (1 == 1) ? 1.0 : 0.5,
+                            opacity: (nameController.text != '' && surnameController.text != '' && lastnameController.text != '' && _isGenderSelected != false && _isDateSelected != false) ? 1.0 : 0.5,
                             child: ElevatedButton(
                               style: ButtonStyle(
                                   backgroundColor: MaterialStateProperty.all(Color(0xffDD2006)),
@@ -556,7 +580,9 @@ class _MeetState extends State<Meet> {
                                   fixedSize: MaterialStateProperty.all(Size(screenWidth, 48))
                               ),
                               onPressed: () {
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
+                                if (nameController.text != '' && surnameController.text != '' && lastnameController.text != '' && dateController.text != '' && sexController.text != '') {
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
+                                }
                               },
                               child: Text(
                                 'Далее',
