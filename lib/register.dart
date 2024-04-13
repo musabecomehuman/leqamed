@@ -4,25 +4,65 @@ import 'package:email_validator/email_validator.dart';
 import 'support.dart';
 import 'login.dart';
 import 'regcheck.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'onboarding.dart';
 
-void main() {
-  runApp(MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  final bool onboardingComplete = prefs.getBool('onboardingComplete') ?? false;
+  runApp(MyApp(onboardingComplete: onboardingComplete));
 }
 
 class MyApp extends StatelessWidget {
+  final bool onboardingComplete;
+
+  const MyApp({Key? key, required this.onboardingComplete}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: Scaffold(
+      home: onboardingComplete ? Scaffold(
         backgroundColor: Color(0xffFAF9F7),
         body: MyRegistrationScreen(),
-      ),
+      ) : OnboardingWrapper(),
     );
   }
 }
+
+class OnboardingWrapper extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<bool>(
+      future: _checkFirstTime(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          if (snapshot.data == true) {
+            return OnboardingScreen();
+          } else {
+            return MyRegistrationScreen();
+          }
+        } else {
+          return Scaffold(
+            body: Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
+        }
+      },
+    );
+  }
+
+  Future<bool> _checkFirstTime() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final bool onboardingComplete = prefs.getBool('onboardingComplete') ?? false;
+    return !onboardingComplete;
+  }
+}
+
 
 class MyRegistrationScreen extends StatefulWidget {
   @override
