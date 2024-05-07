@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:email_validator/email_validator.dart';
 import 'recovery.dart';
 import 'register.dart';
+import 'home.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -211,7 +212,7 @@ class _LoginState extends State<Login> {
                             fixedSize: MaterialStateProperty.all(Size(screenWidth, 48))
                         ),
                         onPressed: () {
-                          // Handle registration button press
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
                         },
                         child: Text(
                           'Далее',

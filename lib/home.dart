@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'homeSearch.dart';
+import 'note.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -49,7 +51,7 @@ class _HomeState extends State<Home> {
                         children: [
                           GestureDetector(
                             onTap: () {
-
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => HomeSearch()));
                             },
                             child: SvgPicture.asset('assets/search.svg'),
                           ),
@@ -118,26 +120,145 @@ class _HomeState extends State<Home> {
                         )
                       ),
                       SizedBox(width: 6),
-                      Container(
-                        height: 72,
-                        width: screenWidth - 118,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(6),
-                          border: Border.all(width: 1.6, color: Color.fromRGBO(221, 32, 6, 1)),
+                      GestureDetector(
+                        onTap: () {
+                          showModalBottomSheet(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
+                              ),
+                              context: context,
+                              builder: (BuildContext context) {
+                                return StatefulBuilder(
+                                  builder: (BuildContext context, StateSetter setState) {
+                                    return Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        SizedBox(height: 24),
+                                        Row(
+                                          children: [
+                                            Padding(padding: EdgeInsets.only(left:20)),
+                                            Expanded(
+                                              child: Container(
+                                                child: Text(
+                                                  'Телемедицина',
+                                                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600, color:Color(0xff1C1B19), fontFamily: 'Inter'),
+                                                ),
+                                              ),
+                                            ),
+                                            GestureDetector(
+                                              onTap: () {
+                                                setState(() {
+                                                  Navigator.pop(context);
+                                                });
+                                              },
+                                              child: SvgPicture.asset('assets/close.svg'),
+                                            ),
+                                            Padding(padding: EdgeInsets.only(right: 20)),
+                                          ],
+                                        ),
+                                        SizedBox(height: 16),
+                                        Padding(
+                                          padding: EdgeInsets.symmetric(horizontal: 20),
+                                          child: Column(
+                                            children: [
+                                              Text(
+                                                "В нашем приложении доступны онлайн-приёмы для каждой из клиник",
+                                                style: TextStyle(
+                                                    fontSize: 16,
+                                                    fontWeight: FontWeight.w400,
+                                                    fontFamily: 'Inter',
+                                                    color: Color.fromRGBO(28, 27, 25, 1)
+                                                ),
+                                              ),
+                                              SizedBox(height: 24),
+                                              Row(
+                                                mainAxisAlignment: MainAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    "Доступность и удобство",
+                                                    style: TextStyle(
+                                                      fontSize: 20,
+                                                      fontWeight: FontWeight.w500,
+                                                      fontFamily: 'Inter',
+                                                      color: Color.fromRGBO(28, 27, 25, 1),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              SizedBox(height: 12),
+                                              Text(
+                                                "Вы можете получить качественную медицинскую помощь, которая ничем не отличается от обычного визита в клинику, не выходя из дома.",
+                                                style: TextStyle(
+                                                    fontSize: 16,
+                                                    fontWeight: FontWeight.w400,
+                                                    fontFamily: 'Inter',
+                                                    color: Color.fromRGBO(28, 27, 25, 1)
+                                                ),
+                                              ),
+                                              SizedBox(height: 12),
+                                              Text(
+                                                "Вы можете получить качественную медицинскую помощь, которая ничем не отличается от обычного визита в клинику, не выходя из дома.",
+                                                style: TextStyle(
+                                                    fontSize: 16,
+                                                    fontWeight: FontWeight.w400,
+                                                    fontFamily: 'Inter',
+                                                    color: Color.fromRGBO(28, 27, 25, 1)
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(height: 34),
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
+                                          child: ElevatedButton(
+                                            style: ButtonStyle(
+                                                backgroundColor: MaterialStateProperty.all(Color(0xffDD2006)),
+                                                shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(6))),
+                                                fixedSize: MaterialStateProperty.all(Size(screenWidth, 48))
+                                            ),
+                                            onPressed: () {
+                                              // on pressed
+                                            },
+                                            child: Text(
+                                              'Записаться на онлайн-приём',
+                                              style: TextStyle(
+                                                  fontFamily: 'Inter',
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.w500,
+                                                  color: Color(0xffFAF9F7)
+                                              ),
+                                            ),
+                                          ),
+                                        )
+                                      ],
+                                    );
+                                  },
+                                );
+                              }
+                          );
+                        },
+                        child: Container(
+                          height: 72,
+                          width: screenWidth - 118,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(6),
+                            border: Border.all(width: 1.6, color: Color.fromRGBO(221, 32, 6, 1)),
+                          ),
+                          child: Row(
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.all(16),
+                                child: SvgPicture.asset('assets/telemedicine.svg'),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.all(16),
+                                child: SvgPicture.asset('assets/RightArrowBig.svg'),
+                              ),
+                            ],
+                          ),
                         ),
-                        child: Row(
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.all(16),
-                              child: SvgPicture.asset('assets/telemedicine.svg'),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.all(16),
-                              child: SvgPicture.asset('assets/RightArrowBig.svg'),
-                            ),
-                          ],
-                        ),
-                      ),
+                      )
                     ],
                   ),
                   SizedBox(height: 12),
@@ -200,6 +321,9 @@ class _HomeState extends State<Home> {
             ),
             SizedBox(width: (screenWidth - 280) / 4),
             GestureDetector(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => Note()));
+              },
               child: SvgPicture.asset('assets/note.svg'),
             ),
             SizedBox(width: (screenWidth - 280) / 4),

@@ -35,6 +35,7 @@ dependencies:
   google_fonts: ^2.1.0
   email_validator: ^2.1.16
   carousel_slider: ^4.2.1
+  flutter_date_range_picker: ^0.0.14
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -84,8 +85,12 @@ flutter:
     - assets/female.svg
     - assets/homeElement.png
     - assets/Video.svg
+    - assets/Location.svg
+    - assets/time_circle.svg
+    - assets/Calendar.svg
     - assets/telemedicine.svg
     - assets/RightArrowBig.svg
+    - assets/RightArrow.svg
     - assets/column.svg
     - assets/home.svg
     - assets/note.svg

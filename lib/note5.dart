@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'note4.dart';
 
-class Support extends StatefulWidget {
+class Note5 extends StatefulWidget {
   @override
-  _SupportState createState() => _SupportState();
+  _NoteState5 createState() => _NoteState5();
 }
 
-class _SupportState extends State<Support> {
+class _NoteState5 extends State<Note5> {
+
+  String _format = "Легамед";
+  TextEditingController _formatController = TextEditingController();
   TextEditingController _searchController = TextEditingController();
   List<String> _supportList = [
     'Авторизация',
@@ -28,13 +32,14 @@ class _SupportState extends State<Support> {
   void initState() {
     super.initState();
     _filteredSupportList = _supportList;
+    _formatController.text = _format;
     _searchController.addListener(_filterSupportList);
   }
 
   @override
   void dispose() {
-    _searchController.dispose();
     super.dispose();
+    _searchController.dispose();
   }
 
   void _filterSupportList() {
@@ -74,38 +79,32 @@ class _SupportState extends State<Support> {
                         },
                         child: SvgPicture.asset('assets/LeftArrowBig.svg'),
                       ),
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                        decoration: BoxDecoration(
-                          color: Color.fromRGBO(221, 32, 6, 1),
-                          borderRadius: BorderRadius.circular(6),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'Написать нам',
+                      Text('Запись на приём'),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: Text(
+                              'Отмена',
                               style: TextStyle(
                                 fontSize: 16,
-                                color: Color.fromRGBO(250, 249, 247, 1),
+                                color: Color.fromRGBO(221, 32, 6, 1),
                                 fontFamily: 'Inter',
-                                fontWeight: FontWeight.w500,
+                                fontWeight: FontWeight.w400,
                               ),
                             ),
-                            Container(
-                              padding: EdgeInsets.only(left: 8),
-                              child: SvgPicture.asset('assets/edit_square.svg'),
-                            )
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
                   SizedBox(height: 16),
                   Container(
-                    width: screenWidth / 1.76,
                     child: Text(
-                      'Возникли сложности?',
+                      'Выберите услугу',
                       style: TextStyle(
                         fontSize: 32,
                         fontWeight: FontWeight.w600,
@@ -113,19 +112,6 @@ class _SupportState extends State<Support> {
                         fontFamily: 'Inter',
                         height: 1,
                       ),
-                    ),
-                  ),
-                  SizedBox(height: 13),
-                  Container(
-                    width: screenWidth / 1.48,
-                    child: Text(
-                      'Мы собрали для вас инструкции по всем разделам приложения на всевозможные темы:',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Color.fromRGBO(144, 144, 142, 0.52),
-                        fontFamily: 'Inter',
-                      ),
-                      textAlign: TextAlign.left,
                     ),
                   ),
                   SizedBox(height: 36),
@@ -142,14 +128,14 @@ class _SupportState extends State<Support> {
                       ),
                       hintText: 'Поиск',
                       hintStyle: TextStyle(
-                        fontFamily: 'Inter',
-                        fontWeight: FontWeight.w400,
-                        fontSize: 16,
-                        color: Color.fromRGBO(28, 27, 25, 0.48)
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.w400,
+                          fontSize: 16,
+                          color: Color.fromRGBO(28, 27, 25, 0.48)
                       ),
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(6),
-                        borderSide: BorderSide.none
+                          borderRadius: BorderRadius.circular(6),
+                          borderSide: BorderSide.none
                       ),
                     ),
                   ),
@@ -164,7 +150,7 @@ class _SupportState extends State<Support> {
                             if (index != _filteredSupportList.length - 1) // Check if it's not the last item
                               InkWell(
                                 onTap: () {
-                                  // Handle the onTap event here
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => Note4()));
                                 },
                                 borderRadius: BorderRadius.circular(6),
                                 child: Container(

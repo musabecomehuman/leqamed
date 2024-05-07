@@ -1,9 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:email_validator/email_validator.dart';
 import 'support.dart';
-import 'home.dart';
+import 'addnumber.dart';
 
 class Meet extends StatefulWidget {
   @override
@@ -31,13 +30,6 @@ class _MeetState extends State<Meet> {
       MaterialPageRoute(builder: (context) => Support()),
     );
   }
-
-  // void _navigateToRegScreen(BuildContext context) {
-  //   Navigator.push(
-  //     context,
-  //     MaterialPageRoute(builder: (context) => MyRegistrationScreen()),
-  //   );
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -444,7 +436,7 @@ class _MeetState extends State<Meet> {
                                               borderRadius: BorderRadius.circular(6),
                                             ),
                                             child: ListTile(
-                                              leading: SvgPicture.asset('male.svg'),
+                                              leading: SvgPicture.asset('assets/male.svg'),
                                               title: CheckboxListTile(
                                                 value: _sex == 'Мужчина',
                                                 title: Text('Мужчина'),
@@ -470,7 +462,7 @@ class _MeetState extends State<Meet> {
                                               borderRadius: BorderRadius.circular(6),
                                             ),
                                             child: ListTile(
-                                              leading: SvgPicture.asset('female.svg'),
+                                              leading: SvgPicture.asset('assets/female.svg'),
                                               title: CheckboxListTile(
                                                 value: _sex == 'Женщина',
                                                 title: Text('Женщина'),
@@ -581,7 +573,7 @@ class _MeetState extends State<Meet> {
                               ),
                               onPressed: () {
                                 if (nameController.text != '' && surnameController.text != '' && lastnameController.text != '' && dateController.text != '' && sexController.text != '') {
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => AddNumber()));
                                 }
                               },
                               child: Text(
